@@ -1,0 +1,56 @@
+@import '../variables.scss';
+
+.details {
+  margin: 10px 0;
+  border-radius: 5px;
+  box-shadow: 0 0 2px $shadow-color;
+
+  &:hover {
+    box-shadow: 0 0 5px $shadow-color;
+  }
+
+  &__summary {
+    cursor: pointer;
+    margin: 0 auto;
+    padding: 10px 20px;
+  }
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+
+  &__school {
+    margin-right: 20px;
+    flex: 0 0 50%;
+  }
+}
+
+.article {
+  font-size: 1.1em;
+
+  &__title {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.2em;
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 435px) {
+  .summary {
+    & h2 {
+      font-size: 1em;
+    }
+  }
+
+  .article {
+    &__title {
+      font-size: 0.9em;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import '../variables.scss';
+
+.main__error {
+  margin: 7px 0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 2px #444;
+  background-color: $error-background-color;
+  font-size: $summary-font-size;
+}
