@@ -1,24 +1,58 @@
+import { useMemo, useState } from 'react'
+import Checkbox from './Checkbox'
+import Chart from './Chart'
 import Descriptions from './Descriptions'
 import schoolDetailsStyles from './SchoolDetails.module.scss'
 
 function SchoolDetails({ schoolName, parsedPages }) {
+  const [checked, setChecked] = useState(false)
+  const chartData = useMemo(() =>
+    parsedPages.reduce(
+      (acc, page) => {
+        acc.labels.push(page.titleContent)
+        acc.datasets[0].data.push(
+          parseInt(page.filledData.at(-1).filledPercent),
+        )
+        return acc
+      },
+      {
+        labels: [],
+        datasets: [
+          {
+            data: [],
+            backgroundColor: 'rgba(255, 70, 109, 0.2)',
+          },
+        ],
+      },
+    ),
+  )
+
+  const checkedHandler = (checked) => {
+    setChecked(checked)
+  }
+
   return (
     <details className={schoolDetailsStyles.details}>
       <summary
         className={`${schoolDetailsStyles.details__summary} ${schoolDetailsStyles.summary}`}
       >
         <h2>{schoolName}</h2>
+        <Checkbox checkedHandler={checkedHandler} />
       </summary>
-      {parsedPages.map((page, index) => {
-        return (
-          <article key={index} className={schoolDetailsStyles.article}>
-            <h3 className={schoolDetailsStyles.article__title}>
-              {page.titleContent}
-            </h3>
-            <Descriptions descriptions={page.filledData} />
-          </article>
-        )
-      })}
+      {checked ? (
+        <Chart chartData={chartData} />
+      ) : (
+        parsedPages.map((page, index) => {
+          return (
+            <article key={index} className={schoolDetailsStyles.article}>
+              <h3 className={schoolDetailsStyles.article__title}>
+                {page.titleContent}
+              </h3>
+              <Descriptions descriptions={page.filledData} />
+            </article>
+          )
+        })
+      )}
     </details>
   )
 }
