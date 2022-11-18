@@ -1,21 +1,11 @@
-import { useEffect, useState } from 'react'
 import checkboxStyles from './Checkbox.module.scss'
 
 function Checkbox({ checkedHandler }) {
-  const [checked, setChecked] = useState(false)
-
-  useEffect(() => {
-    checkedHandler(checked)
-  }, [checked])
-
   return (
     <>
       <label className={checkboxStyles.label}>
         <input
-          checked={checked}
-          onChange={() => {
-            setChecked(!checked)
-          }}
+          onChange={() => checkedHandler()}
           type="checkbox"
           name="switch"
           id="switch"

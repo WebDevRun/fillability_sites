@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import Checkbox from './Checkbox'
 import Chart from './Chart'
 import Descriptions from './Descriptions'
@@ -6,30 +6,19 @@ import schoolDetailsStyles from './SchoolDetails.module.scss'
 
 function SchoolDetails({ schoolName, parsedPages }) {
   const [checked, setChecked] = useState(false)
-  const chartData = useMemo(() =>
-    parsedPages.reduce(
-      (acc, page) => {
-        acc.labels.push(page.titleContent)
-        acc.datasets[0].data.push(
-          parseInt(page.filledData.at(-1).filledPercent),
-        )
-        return acc
-      },
-      {
-        labels: [],
-        datasets: [
-          {
-            data: [],
-            backgroundColor: 'rgba(255, 70, 109, 0.2)',
-          },
-        ],
-      },
-    ),
+  const chartData = parsedPages.reduce(
+    (acc, page) => {
+      acc.labels.push(page.titleContent)
+      acc.data.push(parseInt(page.filledData.at(-1).filledPercent))
+      return acc
+    },
+    {
+      labels: [],
+      data: [],
+    },
   )
 
-  const checkedHandler = (checked) => {
-    setChecked(checked)
-  }
+  const checkedHandler = () => setChecked(!checked)
 
   return (
     <details className={schoolDetailsStyles.details}>
